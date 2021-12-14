@@ -14,7 +14,8 @@ namespace CatHerder.Modules
     public class CommandsModule: ModuleBase<SocketCommandContext>
     {
         [Command("PermissionsReport")]
-        [RequireUserPermission(ChannelPermission.ManageRoles | ChannelPermission.ManageChannels)]
+        [RequireUserPermission(GuildPermission.ManageRoles | GuildPermission.ManageChannels,
+            ErrorMessage="You lack required permissions to request this report.")]
         public async Task PermissionsReport()
         {
             // Requires SERVER MEMBERS INTENT to be enabled for the bot. Otherwise,
