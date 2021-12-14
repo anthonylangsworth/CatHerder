@@ -17,7 +17,7 @@ namespace CatHerder.Services
     /// <remarks>
     /// Base on https://docs.stillu.cc/guides/commands/intro.html.
     /// </remarks>
-    internal class CommandHandlerService
+    internal class CommandHandlerService : IService
     {
         public CommandHandlerService(DiscordSocketClient client, CommandService commandService, IServiceProvider serviceProvider)
         {

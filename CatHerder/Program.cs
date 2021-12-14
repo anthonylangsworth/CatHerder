@@ -3,29 +3,31 @@ using CatHerder.Services;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 using ServiceProvider serviceProvider = ConfigureServices();
-// TODO: Load these via reflection then instantiate them all, e.g. serviceProvider.GetRequiredServices<IService>();
-serviceProvider.GetRequiredService<CommandHandlerService>();
-serviceProvider.GetRequiredService<LoggingService>();
+serviceProvider.GetServices<IService>(); // Instantiate services
 Bot bot = serviceProvider.GetRequiredService<Bot>();
 Task.WaitAny(bot.Start(), ReadKeys());
 
 ServiceProvider ConfigureServices()
 {
-    ServiceProvider serviceProvider = new ServiceCollection()
+    IServiceCollection serviceCollection = new ServiceCollection()
         .AddSingleton<DiscordSocketClient>()
         .AddSingleton<Bot>()
-        .AddSingleton<CommandService>()
-        .AddSingleton<CommandHandlerService>()
-        .AddSingleton<LoggingService>()
-        .BuildServiceProvider();
+        .AddSingleton<CommandService>();
 
-    return serviceProvider;
+    // Add services
+    foreach(Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService))))
+    {
+        serviceCollection.AddSingleton(typeof(IService), type);
+    }
+    
+    return serviceCollection.BuildServiceProvider();
 }
 
 async Task ReadKeys()
-{
+{ 
     // Reference: https://stackoverflow.com/questions/5891538/listen-for-key-press-in-net-console-app
     while (!Console.KeyAvailable && Console.ReadKey(true).Key != ConsoleKey.Escape)
     {

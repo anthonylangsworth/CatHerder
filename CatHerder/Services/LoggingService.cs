@@ -15,7 +15,7 @@ namespace CatHerder.Services
 	/// <remarks>
 	/// Copied from https://docs.stillu.cc/guides/concepts/logging.html.
 	/// </remarks>
-	internal class LoggingService
+	internal class LoggingService : IService
 	{
 		public LoggingService(DiscordSocketClient client, CommandService command)
 		{
