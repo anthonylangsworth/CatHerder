@@ -1,4 +1,7 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
+using Discord.Webhook;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +15,19 @@ namespace CatHerder.Modules
         [Command("PermissionsReport")]
         public async Task PermissionsReport()
         {
-            //const long EdaKuntiLeagueGuildId = 141831692699566080;
-            //SocketGuild edaKuntiLeagueGuild = client.GetGuild(EdaKuntiLeagueGuildId);
+            IReadOnlyCollection<SocketRole> roles = Context.Guild.Roles;
 
-            await ReplyAsync("Coming soon!");
+            using MemoryStream memoryStream = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(memoryStream);
+            streamWriter.WriteLine("User," + string.Join(",", roles.Select(role => role.Name)));
+            foreach (SocketGuildUser user in Context.Guild.Users)
+            {
+                streamWriter.WriteLine(user.Nickname + "," + string.Join(",", roles.Select(role => user.Roles.Any(r => r.Id == role.Id) ? "Y" : "N")));
+            }
+            streamWriter.Flush();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            await Context.Channel.SendFileAsync(memoryStream, "permissions.csv");
         }
     }
 }
