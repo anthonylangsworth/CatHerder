@@ -12,24 +12,24 @@ using System.Threading.Tasks;
 namespace CatHerder.Services
 {
     /// <summary>
-    /// 
+    /// Receive messages from servers and dispatch to command modules.
     /// </summary>
     /// <remarks>
     /// Base on https://docs.stillu.cc/guides/commands/intro.html.
     /// </remarks>
-    internal class CommandHandlerService : IService
+    internal class CommandDispatcherService : IService
     {
-        public CommandHandlerService(DiscordSocketClient client, CommandService commandService, IServiceProvider serviceProvider)
+        public CommandDispatcherService(DiscordSocketClient client, CommandService commandService, IServiceProvider serviceProvider)
         {
             Client = client;
             CommandService = commandService;
             ServiceProvider = serviceProvider;
 
-            Client.MessageReceived += HandleCommandAsync;
+            Client.MessageReceived += MessageReceived;
             CommandService.AddModulesAsync(Assembly.GetEntryAssembly(), ServiceProvider).GetAwaiter().GetResult();
         }
 
-        private async Task HandleCommandAsync(SocketMessage socketMessage)
+        private async Task MessageReceived(SocketMessage socketMessage)
         {
             SocketUserMessage? socketUserMessage = socketMessage as SocketUserMessage;
             if (socketUserMessage != null && !socketUserMessage.Author.IsBot)
@@ -46,12 +46,12 @@ namespace CatHerder.Services
                 }
             }
         }
-
+        
         private DiscordSocketClient Client { get; }
         private CommandService CommandService { get; }
         private IServiceProvider ServiceProvider { get; }
 
-        // Support both via a user (!) and role (@)
+        // Support both via a user (!) and role (&)
         private readonly Regex CommandParser = new Regex(@"^<@[!&](\d+)>\s*!");
     }
 }
