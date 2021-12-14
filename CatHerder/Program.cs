@@ -1,15 +1,11 @@
 ﻿using CatHerder;
 using CatHerder.Services;
-using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-
-//const long EdaKuntiLeagueGuildId = 141831692699566080;
-//SocketGuild edaKuntiLeagueGuild = client.GetGuild(EdaKuntiLeagueGuildId);
 
 using ServiceProvider serviceProvider = ConfigureServices();
+// TODO: Load these via reflection then instantiate them all, e.g. serviceProvider.GetRequiredServices<IService>();
 serviceProvider.GetRequiredService<CommandHandlerService>();
 serviceProvider.GetRequiredService<LoggingService>();
 Bot bot = serviceProvider.GetRequiredService<Bot>();
@@ -31,7 +27,6 @@ ServiceProvider ConfigureServices()
 async Task ReadKeys()
 {
     // Reference: https://stackoverflow.com/questions/5891538/listen-for-key-press-in-net-console-app
-    Console.WriteLine("Press ESC to end.");
     while (!Console.KeyAvailable && Console.ReadKey(true).Key != ConsoleKey.Escape)
     {
         await Task.Delay(TimeSpan.FromSeconds(1));

@@ -41,17 +41,9 @@ namespace CatHerder
                 throw new InvalidOperationException($"{ ApiKeyName } environment variable missing or empty");
             }
 
-            //try
-            //{
-                await Client.LoginAsync(TokenType.Bot, apiKey);
-                await Client.StartAsync();
-                await Task.Delay(Timeout.Infinite);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.Error.WriteLine("Error authenticating or starting the bot: " + ex);
-            //    throw;
-            //}
+            await Client.LoginAsync(TokenType.Bot, apiKey);
+            await Client.StartAsync();
+            await Task.Delay(Timeout.Infinite);
         }
 
         /// <summary>
