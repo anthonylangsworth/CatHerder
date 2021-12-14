@@ -10,7 +10,7 @@ using System.Reflection;
 //SocketGuild edaKuntiLeagueGuild = client.GetGuild(EdaKuntiLeagueGuildId);
 
 using ServiceProvider serviceProvider = ConfigureServices();
-await serviceProvider.GetRequiredService<CommandHandlerService>().InstallCommandsAsync();
+serviceProvider.GetRequiredService<CommandHandlerService>();
 serviceProvider.GetRequiredService<LoggingService>();
 Bot bot = serviceProvider.GetRequiredService<Bot>();
 Task.WaitAny(bot.Start(), ReadKeys());

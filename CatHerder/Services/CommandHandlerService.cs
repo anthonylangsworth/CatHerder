@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,9 @@ namespace CatHerder.Services
             Client = client;
             CommandService = commandService;
             ServiceProvider = serviceProvider;
-        }
 
-        public async Task InstallCommandsAsync()    
-        {
             Client.MessageReceived += HandleCommandAsync;
-            await CommandService.AddModulesAsync(Assembly.GetEntryAssembly(), ServiceProvider);
+            CommandService.AddModulesAsync(Assembly.GetEntryAssembly(), ServiceProvider).GetAwaiter().GetResult();
         }
 
         private async Task HandleCommandAsync(SocketMessage socketMessage)
@@ -37,7 +35,9 @@ namespace CatHerder.Services
             if (socketUserMessage != null && !socketUserMessage.Author.IsBot)
             {
                 MatchCollection matches = CommandParser.Matches(socketUserMessage.Content);
-                if (matches.Any())
+                if (matches.Any()
+                    && ulong.TryParse(matches.First().Groups[1].Value, out ulong userId)
+                    && Client.CurrentUser.Id == userId)
                 {
                     await CommandService.ExecuteAsync(
                         context: new SocketCommandContext(Client, socketUserMessage),
@@ -51,6 +51,7 @@ namespace CatHerder.Services
         private CommandService CommandService { get; }
         private IServiceProvider ServiceProvider { get; }
 
-        private readonly Regex CommandParser = new Regex(@"^<@[!@]\d+>\s*!");
+        // Support both via a user (!) and role (@)
+        private readonly Regex CommandParser = new Regex(@"^<@[!&](\d+)>\s*!");
     }
 }

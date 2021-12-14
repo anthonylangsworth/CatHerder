@@ -9,3 +9,8 @@ Discord.Net Structure:
 ## Refernces
 
 1. Discord.Net command details: https://docs.stillu.cc/guides/commands/intro.html
+
+## Test Data
+
+To a user: "<@!920147848878764053> !PermissionsReport"
+To a role: "<@&920147848878764053> !PermissionsReport"
