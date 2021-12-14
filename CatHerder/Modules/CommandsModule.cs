@@ -14,6 +14,7 @@ namespace CatHerder.Modules
     public class CommandsModule: ModuleBase<SocketCommandContext>
     {
         [Command("PermissionsReport")]
+        [RequireUserPermission(ChannelPermission.ManageRoles | ChannelPermission.ManageChannels)]
         public async Task PermissionsReport()
         {
             // Requires SERVER MEMBERS INTENT to be enabled for the bot. Otherwise,
