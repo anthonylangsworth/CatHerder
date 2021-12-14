@@ -12,7 +12,8 @@ Task.WaitAny(bot.Start(), ReadKeys());
 ServiceProvider ConfigureServices()
 {
     IServiceCollection serviceCollection = new ServiceCollection()
-        .AddSingleton<DiscordSocketClient>()
+        .AddSingleton(sp => new DiscordSocketConfig() { AlwaysDownloadUsers = true })
+        .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
         .AddSingleton<Bot>()
         .AddSingleton<CommandService>();
     foreach(Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService))))
