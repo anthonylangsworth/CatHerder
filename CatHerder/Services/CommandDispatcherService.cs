@@ -15,7 +15,7 @@ namespace CatHerder.Services
     /// Receive messages from servers and dispatch to command modules.
     /// </summary>
     /// <remarks>
-    /// Base on https://docs.stillu.cc/guides/commands/intro.html.
+    /// Based on https://docs.stillu.cc/guides/commands/intro.html.
     /// </remarks>
     internal class CommandDispatcherService : IService
     {
