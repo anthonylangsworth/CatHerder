@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 using ServiceProvider serviceProvider = ConfigureServices();
-serviceProvider.GetServices<IService>(); // Instantiate services
 Bot bot = serviceProvider.GetRequiredService<Bot>();
 Task.WaitAny(bot.Start(), ReadKeys());
 
@@ -16,14 +15,14 @@ ServiceProvider ConfigureServices()
         .AddSingleton<DiscordSocketClient>()
         .AddSingleton<Bot>()
         .AddSingleton<CommandService>();
-
-    // Add services
     foreach(Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService))))
     {
         serviceCollection.AddSingleton(typeof(IService), type);
     }
     
-    return serviceCollection.BuildServiceProvider();
+    ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+    serviceProvider.GetServices<IService>(); // Instantiate services
+    return serviceProvider;
 }
 
 async Task ReadKeys()
