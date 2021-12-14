@@ -6,7 +6,7 @@ Cat Herder is a simple Discord bot to help administer the EDA Kunti League Disco
 
 To install and run:
 1. Place the API key for the bot in the DISCORD_APIKEY environment variable.
-2. Ensure the "SERVER MEMBERS INTENT" intent is activated. Otherwise, the code to process the command will hang.
+2. Ensure the "SERVER MEMBERS INTENT" intent is activated in the bot configuration. Otherwise, the code to process the command will hang.
 3. Download, build then run the CatHerder project.
 
 Log messages are written to the console. Press Escape to stop the bot.
