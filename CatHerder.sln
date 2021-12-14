@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordMgmt", "DiscordMgmt\DiscordMgmt.csproj", "{F6F4C9E9-7F64-4C1A-A0CB-6DF6381431BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatHerder", "CatHerder\CatHerder.csproj", "{F6F4C9E9-7F64-4C1A-A0CB-6DF6381431BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
