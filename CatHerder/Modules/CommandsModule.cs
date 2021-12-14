@@ -27,7 +27,7 @@ namespace CatHerder.Modules
             streamWriter.WriteLine("User," + string.Join(",", roles.Select(role => role.Name)));
             foreach (SocketGuildUser user in Context.Guild.Users.OrderBy(user => user.Nickname ?? user.Username))
             {
-                streamWriter.WriteLine(user.Nickname ?? user.Username + ","
+                streamWriter.WriteLine((user.Nickname ?? user.Username) + ","
                     + string.Join(",", roles.Select(role => user.Roles.Any(r => r.Id == role.Id) ? "Y" : "N")));
             }
             streamWriter.Flush();
