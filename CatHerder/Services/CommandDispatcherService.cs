@@ -47,7 +47,7 @@ namespace CatHerder.Services
                 }
                 else if(socketUserMessage.Channel is IPrivateChannel)
                 {
-                    await context.Channel.SendMessageAsync("This bot does not respond to direct messages.");
+                    await context.Channel.SendMessageAsync("I cannot determine your server via direct messages. Give me commands using a mention on a server channel.");
                 }
             }
         }
