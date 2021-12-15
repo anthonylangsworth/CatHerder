@@ -32,6 +32,7 @@ namespace CatHerder.Services
         private async Task MessageReceived(SocketMessage socketMessage)
         {
             SocketUserMessage? socketUserMessage = socketMessage as SocketUserMessage;
+            SocketCommandContext context = new SocketCommandContext(Client, socketUserMessage);
             if (socketUserMessage != null && !socketUserMessage.Author.IsBot)
             {
                 MatchCollection matches = CommandParser.Matches(socketUserMessage.Content);
@@ -40,9 +41,13 @@ namespace CatHerder.Services
                     && Client.CurrentUser.Id == userId)
                 {
                     await CommandService.ExecuteAsync(
-                        context: new SocketCommandContext(Client, socketUserMessage),
+                        context: context,
                         argPos: matches.First().Length,
                         services: ServiceProvider);
+                }
+                else if(socketUserMessage.Channel is IPrivateChannel)
+                {
+                    await context.Channel.SendMessageAsync("This bot does not respond to direct messages.");
                 }
             }
         }

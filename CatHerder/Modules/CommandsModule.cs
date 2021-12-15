@@ -35,7 +35,10 @@ namespace CatHerder.Modules
             streamWriter.Flush();
             memoryStream.Seek(0, SeekOrigin.Begin);
 
-            await Context.Channel.SendFileAsync(memoryStream, "permissions.csv");
+            await Context.Channel.SendFileAsync(
+                stream: memoryStream, 
+                filename: "permissions.csv", 
+                text: "A report listing the server users and their role memberships is attached.");
         }
 
         public string EscapeForCSV(string text)
