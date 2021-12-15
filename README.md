@@ -23,3 +23,7 @@ The structure is simple and based off the examples in the Discord documentation.
 
 1. Discord API reference: https://discord.com/developers/docs/intro
 2. Discord.Net API reference: https://docs.stillu.cc/api/index.html
+
+## License
+
+See [LICENSE](LICENSE) for the license.
