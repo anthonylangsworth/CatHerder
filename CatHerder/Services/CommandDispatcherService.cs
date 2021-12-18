@@ -19,6 +19,12 @@ namespace CatHerder.Services
     /// </remarks>
     internal class CommandDispatcherService : IService
     {
+        /// <summary>
+        /// Construct a <see cref="CommandDispatcherService"/>.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="commandService"></param>
+        /// <param name="serviceProvider"></param>
         public CommandDispatcherService(DiscordSocketClient client, CommandService commandService, IServiceProvider serviceProvider)
         {
             Client = client;
@@ -26,7 +32,7 @@ namespace CatHerder.Services
             ServiceProvider = serviceProvider;
 
             Client.MessageReceived += MessageReceived;
-            CommandService.AddModulesAsync(Assembly.GetEntryAssembly(), ServiceProvider).GetAwaiter().GetResult();
+            CommandService.AddModulesAsync(Assembly.GetExecutingAssembly(), ServiceProvider).GetAwaiter().GetResult();
         }
 
         private async Task MessageReceived(SocketMessage socketMessage)
@@ -35,28 +41,52 @@ namespace CatHerder.Services
             SocketCommandContext context = new SocketCommandContext(Client, socketUserMessage);
             if (socketUserMessage != null && !socketUserMessage.Author.IsBot)
             {
-                MatchCollection matches = CommandParser.Matches(socketUserMessage.Content);
-                if (matches.Any()
-                    && ulong.TryParse(matches.First().Groups[1].Value, out ulong userId)
-                    && Client.CurrentUser.Id == userId)
+                if (socketUserMessage.Channel is IPrivateChannel)
                 {
-                    await CommandService.ExecuteAsync(
-                        context: context,
-                        argPos: matches.First().Length,
-                        services: ServiceProvider);
+                    await context.Channel.SendMessageAsync(
+                        "I cannot determine your server via direct messages. Give me commands using a mention on a server channel.");
                 }
-                else if(socketUserMessage.Channel is IPrivateChannel)
+                else
                 {
-                    await context.Channel.SendMessageAsync("I cannot determine your server via direct messages. Give me commands using a mention on a server channel.");
+                    (bool IsToMe, int argPos) = IsToUser(socketUserMessage.Content, Client.CurrentUser.Id);
+                    if (IsToMe)
+                    {
+                        await CommandService.ExecuteAsync(context, argPos, ServiceProvider);
+                    }
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Is the message to the given user, either directly or via "@role"?
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static (bool IsToMe, int argPos) IsToUser(string content, ulong userId)
+        {
+            (bool IsToMe, int argPos) result;
+            MatchCollection matches = CommandParser.Matches(content);
+            if (matches.Any())
+            {
+                result = (
+                    ulong.TryParse(matches.First().Groups[1].Value, out ulong parsedUserId)
+                        && userId == parsedUserId,
+                    matches.First().Length
+                );
+            }
+            else
+            {
+                result = (false, 0);
+            }
+            return result;
+        }
+
         private DiscordSocketClient Client { get; }
         private CommandService CommandService { get; }
         private IServiceProvider ServiceProvider { get; }
 
         // Support both via a user (!) and role (&)
-        private readonly Regex CommandParser = new Regex(@"^<@[!&](\d+)>\s*!");
+        private static readonly Regex CommandParser = new Regex(@"^<@[!&](\d+)>\s*!");
     }
 }
