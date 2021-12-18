@@ -48,7 +48,7 @@ namespace CatHerder.Services
                 }
                 else
                 {
-                    (bool IsToMe, int argPos) = IsToUser(socketUserMessage.Content, Client.CurrentUser.Id);
+                    (bool IsToMe, int argPos) = IsCommandToUser(socketUserMessage.Content, Client.CurrentUser.Id);
                     if (IsToMe)
                     {
                         await CommandService.ExecuteAsync(context, argPos, ServiceProvider);
@@ -63,7 +63,7 @@ namespace CatHerder.Services
         /// <param name="content"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public static (bool IsToMe, int argPos) IsToUser(string content, ulong userId)
+        public static (bool IsToMe, int argPos) IsCommandToUser(string content, ulong userId)
         {
             (bool IsToMe, int argPos) result;
             MatchCollection matches = CommandParser.Matches(content);
