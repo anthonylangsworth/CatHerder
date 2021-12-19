@@ -43,6 +43,7 @@ namespace CatHerder.Services
             {
                 if (socketUserMessage.Channel is IPrivateChannel)
                 {
+                    // Will not happen unless the DirectMessage intent is applied
                     await context.Channel.SendMessageAsync(
                         "I cannot determine your server via direct messages. Give me commands using a mention on a server channel.");
                 }
