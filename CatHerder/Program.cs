@@ -1,5 +1,6 @@
 ﻿using CatHerder;
 using CatHerder.Services;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,12 @@ Task.WaitAny(bot.Start(), ReadKeys());
 ServiceProvider ConfigureServices()
 {
     IServiceCollection serviceCollection = new ServiceCollection()
-        .AddSingleton<DiscordSocketClient>()
+        .AddSingleton(sp => new DiscordSocketConfig()
+        {
+            AlwaysDownloadUsers = true,
+            GatewayIntents = GatewayIntents.Guilds | GatewayIntents.GuildMembers | GatewayIntents.GuildMessages | GatewayIntents.DirectMessages
+        })
+        .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
         .AddSingleton<Bot>()
         .AddSingleton<CommandService>();
     foreach(Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService))))
