@@ -14,7 +14,6 @@ ServiceProvider ConfigureServices()
     return new ServiceCollection()
         .AddSingleton(sp => new DiscordSocketConfig()
         {
-            AlwaysDownloadUsers = true,
             GatewayIntents = Bot.Intents
         })
         .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
