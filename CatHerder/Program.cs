@@ -1,7 +1,6 @@
 ﻿using CatHerder;
-using CatHerder.Services;
 using Discord;
-using Discord.Commands;
+using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -12,7 +11,7 @@ Task.WaitAny(bot.Start(), ReadKeys());
 
 ServiceProvider ConfigureServices()
 {
-    IServiceCollection serviceCollection = new ServiceCollection()
+    return new ServiceCollection()
         .AddSingleton(sp => new DiscordSocketConfig()
         {
             AlwaysDownloadUsers = true,
@@ -20,15 +19,8 @@ ServiceProvider ConfigureServices()
         })
         .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
         .AddSingleton<Bot>()
-        .AddSingleton<CommandService>();
-    foreach(Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IService))))
-    {
-        serviceCollection.AddSingleton(typeof(IService), type);
-    }
-    
-    ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-    serviceProvider.GetServices<IService>(); // Instantiate services
-    return serviceProvider;
+        .AddSingleton<InteractionService>()
+        .BuildServiceProvider();
 }
 
 async Task ReadKeys()
