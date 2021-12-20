@@ -12,8 +12,7 @@ namespace CatHerder
     public class SlashCommandsModule: InteractionModuleBase<InteractionContext>
     {
         [SlashCommand("permissions-report", "Send a report listing server users and their role memberships to the caller via direct message")]
-        //[RequireUserPermission(GuildPermission.ManageRoles | GuildPermission.ManageChannels,
-        //    ErrorMessage = "You lack required permissions to request this report.")]
+        [RequireUserPermission(GuildPermission.ManageRoles | GuildPermission.ManageChannels)]
         public async Task PermissionsReport()
         {
             await Context.Interaction.DeferAsync();
