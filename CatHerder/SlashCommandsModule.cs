@@ -15,7 +15,7 @@ namespace CatHerder
         [RequireUserPermission(GuildPermission.ManageRoles | GuildPermission.ManageChannels)]
         public async Task PermissionsReport()
         {
-            await Context.Interaction.DeferAsync();
+            await Context.Interaction.DeferAsync(ephemeral: true);
 
             try
             {
@@ -40,20 +40,12 @@ namespace CatHerder
                 streamWriter.Flush();
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
-                IDMChannel dmChannel = await Context.User.CreateDMChannelAsync();
-                try
-                {
-                    await dmChannel.SendFileAsync(
-                        stream: memoryStream,
-                        filename: "permissions.csv",
-                        text: "I have attached a report listing the server's users and their role memberships.");
-                }
-                finally
-                {
-                    await dmChannel.CloseAsync();
-                }
-
-                await Context.Interaction.ModifyOriginalResponseAsync(messageProperties => messageProperties.Content = "I attached the report to a direct message.");
+                await Context.Interaction.FollowupWithFileAsync(
+                    fileStream: memoryStream,
+                    fileName: "permissions.csv",
+                    text: "I attached the report.",
+                    ephemeral: true
+                );
             }
             catch
             {
