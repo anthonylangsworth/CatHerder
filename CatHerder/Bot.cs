@@ -29,11 +29,16 @@ namespace CatHerder
         }
 
         /// <summary>
+        /// Discord features the bot uses, which must be requested up front.
+        /// </summary>
+        public static GatewayIntents Intents => GatewayIntents.Guilds | GatewayIntents.GuildMembers | GatewayIntents.GuildMessages;
+
+        /// <summary>
         /// The Discord client.
         /// </summary>
         internal DiscordSocketClient Client { get; }
-        public InteractionService InteractionService { get; }
-        public IServiceProvider ServiceProvider { get; }
+        internal InteractionService InteractionService { get; }
+        internal IServiceProvider ServiceProvider { get; }
 
         /// <summary>
         /// Start the bot.
@@ -68,7 +73,7 @@ namespace CatHerder
             await Task.Delay(Timeout.Infinite);
         }
 
-
+        
         private Task LogAsync(LogMessage message)
         {
             Console.WriteLine($"[General/{message.Severity}] {message}");

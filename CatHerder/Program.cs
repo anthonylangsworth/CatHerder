@@ -15,11 +15,11 @@ ServiceProvider ConfigureServices()
         .AddSingleton(sp => new DiscordSocketConfig()
         {
             AlwaysDownloadUsers = true,
-            GatewayIntents = GatewayIntents.Guilds | GatewayIntents.GuildMembers | GatewayIntents.GuildMessages
+            GatewayIntents = Bot.Intents
         })
         .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
-        .AddSingleton<Bot>()
         .AddSingleton<InteractionService>()
+        .AddSingleton<Bot>()
         .BuildServiceProvider();
 }
 
