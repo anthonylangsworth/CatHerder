@@ -31,10 +31,11 @@ namespace CatHerder
                 using MemoryStream memoryStream = new MemoryStream();
                 using StreamWriter streamWriter = new StreamWriter(memoryStream);
                 streamWriter.WriteLine("User," + string.Join(",", roles.Select(role => EscapeForCSV(role.Name))));
-                foreach (IGuildUser user in guild.Users.OrderBy(user => GetDisplayName(user)))
+                foreach ((string name, IEnumerable<IRole> userRoles) in guild.Users.Select(user => (name: EscapeForCSV(GetDisplayName(user)), userRoles: user.Roles))
+                                                                                   .OrderBy(user => user.name))
                 {
-                    streamWriter.WriteLine(EscapeForCSV(GetDisplayName(user)) + ","
-                        + string.Join(",", roles.Select(role => user.RoleIds.Any(roleId => roleId == role.Id) ? "Y" : "N")));
+                    streamWriter.WriteLine(name + ","
+                        + string.Join(",", roles.Select(role => userRoles.Any(userRole => userRole.Id == role.Id) ? "Y" : "N")));
                 }
                 streamWriter.Flush();
                 memoryStream.Seek(0, SeekOrigin.Begin);
