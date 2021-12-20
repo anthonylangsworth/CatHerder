@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatHerder.Modules
+namespace CatHerder
 {
     public class SlashCommandsModule: InteractionModuleBase<InteractionContext>
     {
