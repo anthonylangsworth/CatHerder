@@ -65,15 +65,17 @@ namespace CatHerder
             string? apiKey = Environment.GetEnvironmentVariable(ApiKeyName);
             if (string.IsNullOrWhiteSpace(apiKey))
             {
-                throw new InvalidOperationException($"{ ApiKeyName } environment variable missing or empty");
+                await LogAsync(new LogMessage(LogSeverity.Critical, "Startup", $"{ ApiKeyName } environment variable missing or empty"));
+            }
+            else
+            {
+                await Client.LoginAsync(TokenType.Bot, apiKey);
+                await Client.StartAsync();
             }
 
-            await Client.LoginAsync(TokenType.Bot, apiKey);
-            await Client.StartAsync();
             await Task.Delay(Timeout.Infinite);
         }
 
-        
         private Task LogAsync(LogMessage message)
         {
             Console.WriteLine($"[General/{message.Severity}] {message}");
