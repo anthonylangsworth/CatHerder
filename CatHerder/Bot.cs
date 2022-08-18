@@ -1,12 +1,7 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatHerder
 {
@@ -65,7 +60,7 @@ namespace CatHerder
             string? apiKey = Environment.GetEnvironmentVariable(ApiKeyName);
             if (string.IsNullOrWhiteSpace(apiKey))
             {
-                await LogAsync(new LogMessage(LogSeverity.Critical, "Startup", $"{ ApiKeyName } environment variable missing or empty"));
+                await LogAsync(new LogMessage(LogSeverity.Critical, "Startup", $"{ApiKeyName} environment variable missing or empty"));
             }
             else
             {
@@ -90,7 +85,7 @@ namespace CatHerder
         private async Task Client_SlashCommandExecutedAsync(SocketSlashCommand socketSlashCommand)
         {
             await InteractionService.ExecuteCommandAsync(
-                new InteractionContext(Client, socketSlashCommand, socketSlashCommand.User),
+                new InteractionContext(Client, socketSlashCommand),
                 ServiceProvider);
         }
     }

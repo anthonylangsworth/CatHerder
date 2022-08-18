@@ -1,15 +1,10 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatHerder
 {
-    public class SlashCommandsModule: InteractionModuleBase<InteractionContext>
+    public class SlashCommandsModule : InteractionModuleBase<InteractionContext>
     {
         [SlashCommand("permissions-report", "Send a report listing server users and their role memberships to the caller via direct message")]
         [RequireUserPermission(GuildPermission.ManageRoles | GuildPermission.ManageChannels)]
@@ -20,7 +15,7 @@ namespace CatHerder
             try
             {
                 // Context.Guild is null for some reason
-                SocketGuild guild = ((SocketGuildUser) Context.User).Guild;
+                SocketGuild guild = ((SocketGuildUser)Context.User).Guild;
 
                 // Requires SERVER MEMBERS INTENT to be enabled for the bot. Otherwise,
                 // this line will hang. 
