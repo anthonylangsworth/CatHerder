@@ -4,7 +4,6 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-ENV DISCORD_APIKEY=${DISCORD_APIKEY}
 WORKDIR /src
 COPY ["CatHerder/CatHerder.csproj", "CatHerder/"]
 RUN dotnet restore "CatHerder/CatHerder.csproj"
@@ -16,6 +15,7 @@ FROM build AS publish
 RUN dotnet publish "CatHerder.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
+ENV DISCORD_APIKEY=${DISCORD_APIKEY}
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CatHerder.dll"]

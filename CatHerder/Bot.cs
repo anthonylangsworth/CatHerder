@@ -58,7 +58,7 @@ namespace CatHerder
             Client.GuildAvailable += Client_GuildAvailableAsync;
 
             const string ApiKeyName = "DISCORD_APIKEY";
-            string? apiKey = ServiceProvider.GetService<IConfiguration>()?.GetValue<string>(ApiKeyName);
+            string? apiKey = ServiceProvider.GetService<IConfiguration>()?.GetSection(ApiKeyName).Value;
             if (string.IsNullOrWhiteSpace(apiKey))
             {
                 await LogAsync(new LogMessage(LogSeverity.Critical, "Startup", $"{ApiKeyName} environment variable missing or empty"));

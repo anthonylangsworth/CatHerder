@@ -10,10 +10,8 @@ await serviceProvider.GetRequiredService<Bot>().Start();
 static ServiceProvider ConfigureServices()
 {
     IConfigurationRoot configurationRoot = new ConfigurationBuilder().AddEnvironmentVariables("")
-                                                                     // .AddAzureAppConfiguration()
                                                                      .Build();
     return new ServiceCollection()
-        // .AddAzureAppConfiguration()
         .AddSingleton<IConfiguration>(configurationRoot)
         .AddSingleton(sp => new DiscordSocketConfig()
         {
