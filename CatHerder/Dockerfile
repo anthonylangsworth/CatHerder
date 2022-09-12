@@ -15,7 +15,6 @@ FROM build AS publish
 RUN dotnet publish "CatHerder.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
-ENV DISCORD_APIKEY=${DISCORD_APIKEY}
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CatHerder.dll"]
