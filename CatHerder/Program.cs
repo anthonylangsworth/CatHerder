@@ -8,7 +8,7 @@ using ServiceProvider serviceProvider = ConfigureServices();
 Bot bot = serviceProvider.GetRequiredService<Bot>();
 Task.WaitAny(bot.Start());
 
-ServiceProvider ConfigureServices()
+static ServiceProvider ConfigureServices()
 {
     IConfigurationRoot configurationRoot = new ConfigurationBuilder().AddEnvironmentVariables("")
                                                                      // .AddAzureAppConfiguration()
