@@ -7,11 +7,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatHerder", "CatHerder\CatH
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1FC407E0-20FF-4092-8D6D-ECC1544288C9}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatHerder.Test", "CatHerder.Test\CatHerder.Test.csproj", "{24B73A2E-55F5-4E19-9E1C-C83B212B9C20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatHerder.Test", "CatHerder.Test\CatHerder.Test.csproj", "{24B73A2E-55F5-4E19-9E1C-C83B212B9C20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{D8921A4B-C199-43C1-AEC8-0DBF993EA722}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{2806C571-53C9-4978-A112-E1D14D2E330B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		.github\workflows\main.yml = .github\workflows\main.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2806C571-53C9-4978-A112-E1D14D2E330B} = {D8921A4B-C199-43C1-AEC8-0DBF993EA722}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1303FC24-D2F7-458C-814A-0A14E88DE6EC}

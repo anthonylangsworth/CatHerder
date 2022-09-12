@@ -1,6 +1,8 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace CatHerder
@@ -12,7 +14,7 @@ namespace CatHerder
     {
         /// <summary>
         /// Construct a <see cref="Bot"/>.
-        /// </summary>
+        /// </summaryq>
         /// <param name="discordClient">
         /// The <see cref="DiscordSocketClient"/> to use.
         /// </param>
@@ -55,9 +57,8 @@ namespace CatHerder
             Client.SlashCommandExecuted += Client_SlashCommandExecutedAsync;
             Client.GuildAvailable += Client_GuildAvailableAsync;
 
-            // TODO: Load this from configuraiton or similar
             const string ApiKeyName = "DISCORD_APIKEY";
-            string? apiKey = Environment.GetEnvironmentVariable(ApiKeyName);
+            string? apiKey = ServiceProvider.GetService<IConfiguration>()?.GetValue<string>(ApiKeyName);
             if (string.IsNullOrWhiteSpace(apiKey))
             {
                 await LogAsync(new LogMessage(LogSeverity.Critical, "Startup", $"{ApiKeyName} environment variable missing or empty"));

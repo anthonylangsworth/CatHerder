@@ -6,14 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileRunEnvironmentFiles>ApiKey.env</DockerfileRunEnvironmentFiles>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ApiKey.env" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="3.7.2" />
+    <PackageReference Include="Discord.Net" Version="3.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
   </ItemGroup>
