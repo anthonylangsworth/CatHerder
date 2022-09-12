@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using ServiceProvider serviceProvider = ConfigureServices();
-Bot bot = serviceProvider.GetRequiredService<Bot>();
-Task.WaitAny(bot.Start());
+await serviceProvider.GetRequiredService<Bot>().Start();
 
 static ServiceProvider ConfigureServices()
 {
