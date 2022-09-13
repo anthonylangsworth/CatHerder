@@ -27,4 +27,4 @@ The structure is simple and based off the examples in the Discord documentation.
 
 ## License
 
-See [LICENSE](LICENSE) for the license.
+See [LICENSE](LICENSE) for the license (GPL v3).
