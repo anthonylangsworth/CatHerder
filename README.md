@@ -2,7 +2,7 @@
 
 Cat Herder is a simple Discord bot to help administer the EDA Kunti League Discord server. 
 
-Enter the slash command `/permssions-report` to generate a CSV. This lists each user in a row and each role in a column, showing their memberships. This command is only available to users with "Manage Channels"" and "Manage Roles" permissions.
+Enter the slash command `/permssions-report` to generate a CSV. This lists each user in a row and each role in a column, showing their memberships. This command is only available to users with both the "Manage Channels" and "Manage Roles" permissions.
 
 ## Overview
 
