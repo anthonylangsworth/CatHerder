@@ -38,3 +38,14 @@ jobs:
       run: |
         docker build -f "CatHerder/Dockerfile" . --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/catherder:${{ github.sha }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/catherder:${{ github.sha }}
+
+    - name: 'Deploy to Azure Container Instances'
+      uses: 'azure/aci-deploy@v1'
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/catherder:${{ github.sha }}
+        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        name: ci-catherder
+        location: australiaeast
