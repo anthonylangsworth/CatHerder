@@ -27,12 +27,12 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    #- name: Docker Login
-    #  uses: azure/docker-login@v1
-    #  with:
-    #    login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-    #    username: ${{ secrets.REGISTRY_USERNAME }}
-    #    password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Docker Login
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - name: Build and Push Image
       run: |
@@ -45,9 +45,9 @@ jobs:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
         dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
         image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/catherder:${{ github.sha }}
-        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-        registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        #registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        #registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        #registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         name: ci-catherder
         secure-environment-variables: DISCORD_APIKEY=${{ secrets.DISCORD_APIKEY }}
         location: australiaeast
