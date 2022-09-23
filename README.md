@@ -8,7 +8,7 @@ Enter the slash command `/permssions-report` to generate a CSV. This lists each 
 
 ## Overview
 
-This repository automatically deploys to Azure on a successful build.
+Run the action "Deploy" to deploy to Azure.
 
 To install and run manually:
 1. Create a Discord application and turn it into a bot at https://discord.com/developers/applications.
