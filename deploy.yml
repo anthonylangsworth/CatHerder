@@ -1,9 +1,12 @@
-name: Deploy
+name: "Deploy"
 
 on: [workflow_dispatch]
 
 jobs:
   deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
     - name: Azure Login
       uses: azure/login@v1
       with:
