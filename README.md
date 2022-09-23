@@ -1,3 +1,5 @@
+[![Build and Test](https://github.com/anthonylangsworth/CatHerder/actions/workflows/main.yml/badge.svg)](https://github.com/anthonylangsworth/CatHerder/actions/workflows/main.yml)
+
 # Cat Herder
 
 Cat Herder is a simple Discord bot to help administer the EDA Kunti League Discord server. 
