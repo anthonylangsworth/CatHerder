@@ -23,8 +23,8 @@ namespace CatHerder
 
                 IEnumerable<IRole> roles = guild.Roles.OrderBy(role => role.Position);
 
-                using MemoryStream memoryStream = new MemoryStream();
-                using StreamWriter streamWriter = new StreamWriter(memoryStream);
+                using MemoryStream memoryStream = new();
+                using StreamWriter streamWriter = new(memoryStream);
                 streamWriter.WriteLine("User," + string.Join(",", roles.Select(role => EscapeForCSV(role.Name))));
                 foreach ((string name, IEnumerable<IRole> userRoles) in guild.Users.Select(user => (name: EscapeForCSV(GetDisplayName(user)), userRoles: user.Roles))
                                                                                    .OrderBy(user => user.name))
@@ -49,12 +49,12 @@ namespace CatHerder
             }
         }
 
-        public string EscapeForCSV(string text)
+        public static string EscapeForCSV(string text)
         {
             return text.Replace(',', '_');
         }
 
-        public string GetDisplayName(IGuildUser user)
+        public static string GetDisplayName(IGuildUser user)
         {
             return user.Nickname ?? user.Username;
         }
