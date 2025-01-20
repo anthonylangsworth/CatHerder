@@ -18,7 +18,7 @@ static ServiceProvider ConfigureServices()
             GatewayIntents = Bot.Intents
         })
         .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
-        .AddSingleton<InteractionService>()
+        .AddSingleton(sp => new InteractionService(sp.GetRequiredService<DiscordSocketClient>()))
         .AddSingleton<Bot>()
         .BuildServiceProvider();
 }
