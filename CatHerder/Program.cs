@@ -15,7 +15,8 @@ static ServiceProvider ConfigureServices()
         .AddSingleton<IConfiguration>(configurationRoot)
         .AddSingleton(sp => new DiscordSocketConfig()
         {
-            GatewayIntents = Bot.Intents
+            GatewayIntents = Bot.Intents,
+            UseInteractionSnowflakeDate = false // Prevent clock sync issues
         })
         .AddSingleton(sp => new DiscordSocketClient(sp.GetRequiredService<DiscordSocketConfig>()))
         .AddSingleton(sp => new InteractionService(sp.GetRequiredService<DiscordSocketClient>()))
